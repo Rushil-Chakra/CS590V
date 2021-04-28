@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	
+		<meta charset="utf-8">
+		<title>D3: A simple, unstyled axis</title>
+		<script type="text/javascript" src="../d3.js"></script>
+		<style type="text/css">
+
+		</style>
+	</head>
+	<body>	
+		
+		<script type="text/javascript">
+
+			//Width and height
+			var w = 500;
+			var h = 100;
+			var barPadding = 1;
+			var padding = 20;
+			
+			var yearone = d3.csv('2008.csv', function(data) {
+			console.log(data)
+			})
+			
+
+/*
+  output:
+  [
+    { col2:'aaa2', col3:'aaa3' },
+    { col2:'bbb2', col3:'bbb3' },
+    { col2:'ccc2', col3:'ccc3' }
+  ]
+*/
+		</script>
+	</body>
+</html>
