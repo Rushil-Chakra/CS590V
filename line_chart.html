@@ -15,33 +15,35 @@
           "translate(" + margin.left + "," + margin.top + ")");
 
     d3.csv("countypres_2000-2016.csv", function(data){
-      var sumstat = d3.nest()
-    .key(function(d) {return d.state})
-    .entries(data);
+        var sumstat = d3.nest()
+            .key(function(d) {return d.state})
+            .entries(data);
 
-    var x = d3.scaleLinear().domain(d3.extent(data, function(d) {return d.year}))
-    .range([0, width]);
-    svg.append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x).ticks(5));
+        var x = d3.scaleLinear().domain(d3.extent(data, function(d) {return d.year}))
+            .range([0, width]);
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x).ticks(5));
 
-    var y = d3.scaleLinear()
-    .domain([0, d3.max(data, function(d) { return +d.n; })])
-    .range([ height, 0 ]);
-  svg.append("g")
-    .call(d3.axisLeft(y));
+        var y = d3.scaleLinear()
+            .domain([0, d3.max(data, function(d) { return d.totalvotes; })])
+            .range([ height, 0 ]);
+        svg.append("g")
+            .call(d3.axisLeft(y));
 
-    svg.selectAll(".line")
-    .data(sumstat)
-    .enter()
-    .append("path")
-    .attr("stroke", "red")
-    .attr("d", function(d) {
-      return d3.line()
-      .x(function(d) {return x(d.year)})
-      .y(function(d) {return y(d.totalvotes)})
-      (d.values)
-    })
+        svg.selectAll(".line")
+            .data(sumstat)
+            .enter()
+            .filter(function(d) {return d.year > 2006})
+            .append("path")
+            .attr("stroke", "#CCC")
+            .attr("stroke-width", 1.5)
+            .attr("d", function(d) {
+                return d3.line()
+                    .x(function(d) {return x(d.year)})
+                    .y(function(d) {return y(d.totalvotes)})
+                    (d.values)
+            })
     })
 
     
