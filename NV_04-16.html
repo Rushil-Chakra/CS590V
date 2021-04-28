@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+
+<!-- Create a div where the graph will take place -->
+<div id="my_dataviz"></div>
+
+<script>
+
+
+// set the dimensions and margins of the graph
+var margin = {top: 30, right: 30, bottom: 70, left: 60},
+    width = 1000 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+// First svg object for 2004 NV data
+var svg1 = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Parse the Data
+d3.csv("2004_data_NV.csv", function(data) {
+console.log(data)
+
+//List of subgroups -> Party
+var subgroups = ['democrat', 'republican', 'NA']
+//["Dem", "GOP", "Other"]
+
+//List of groups -> County Name
+var groups = d3.map(data, function(d){ return(d.county)}).keys()
+  
+// X axis
+var x = d3.scaleBand()
+  .range([ 0, width ])
+  .domain(groups)
+  .padding(0.2);
+svg1.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+    .attr("transform", "translate(-10,0)rotate(-45)")
+    .style("text-anchor", "end");
+
+// Add Y axis
+var y = d3.scaleLinear()
+  .domain([0, 300000])
+  .range([ height, 0]);
+svg1.append("g")
+  .call(d3.axisLeft(y));
+
+// Scale for subgroups
+var xSubgroup = d3.scaleBand()
+  .domain(subgroups)
+  .range([0, x.bandwidth()])
+  .padding([0.05])
+
+// Color palette for each party
+var color = d3.scaleOrdinal()
+  .domain(subgroups)
+  .range(['#377eb8', '#e41a1c', '#4daf4a'])
+
+console.log(groups)
+console.log(subgroups)
+
+
+//Displaying bars
+svg1.append("g")
+  .selectAll("g")
+  .data(data)
+  .enter()
+  .append("g")
+    .attr("transform", function(d){ return "translate(" + x(d.county) + ",0)"; })
+  .selectAll("rect")
+  .data(function(d) { return subgroups.map(function(key) { return {key: d.party, value: d.candidatevotes}; }); })
+  .enter().append("rect")
+      .attr("x", function(d) { return xSubgroup(d.key); })
+      .attr("y", function(d) { return y(d.value); })
+      .attr("width", xSubgroup.bandwidth())
+      .attr("height", function(d) { return height - y(d.value); })
+      .attr("fill", function(d) { return color(d.key); });
+});
+
+//2nd svg object for 2008 data
+
+var svg2 = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Parse the Data
+d3.csv("2008_data_NV.csv", function(data) {
+console.log(data)
+
+//List of subgroups -> Party
+var subgroups = ['democrat', 'republican', 'NA']
+//["Dem", "GOP", "Other"]
+
+//List of groups -> County Name
+var groups = d3.map(data, function(d){ return(d.county)}).keys()
+  
+// X axis
+var x = d3.scaleBand()
+  .range([ 0, width ])
+  .domain(groups)
+  .padding(0.2);
+svg1.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+    .attr("transform", "translate(-10,0)rotate(-45)")
+    .style("text-anchor", "end");
+
+// Add Y axis
+var y = d3.scaleLinear()
+  .domain([0, 300000])
+  .range([ height, 0]);
+svg1.append("g")
+  .call(d3.axisLeft(y));
+
+// Scale for subgroups
+var xSubgroup = d3.scaleBand()
+  .domain(subgroups)
+  .range([0, x.bandwidth()])
+  .padding([0.05])
+
+// Color palette for each party
+var color = d3.scaleOrdinal()
+  .domain(subgroups)
+  .range(['#377eb8', '#e41a1c', '#4daf4a'])
+
+console.log(groups)
+console.log(subgroups)
+
+
+//Displaying bars
+svg1.append("g")
+  .selectAll("g")
+  .data(data)
+  .enter()
+  .append("g")
+    .attr("transform", function(d){ return "translate(" + x(d.county) + ",0)"; })
+  .selectAll("rect")
+  .data(function(d) { return subgroups.map(function(key) { return {key: d.party, value: d.candidatevotes}; }); })
+  .enter().append("rect")
+      .attr("x", function(d) { return xSubgroup(d.key); })
+      .attr("y", function(d) { return y(d.value); })
+      .attr("width", xSubgroup.bandwidth())
+      .attr("height", function(d) { return height - y(d.value); })
+      .attr("fill", function(d) { return color(d.key); });
+
+})
+</script>
