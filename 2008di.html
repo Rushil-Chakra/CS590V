@@ -24,12 +24,12 @@ var svg = d3.select("#my_dataviz")
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform",
-          "translate(" + 200 + "," + 30 + ")");
-d3.csv("20082.csv", function(data) {
+          "translate(" + margin.left + "," + margin.top + ")");
+d3.csv("2008di.csv", function(data) {
 console.log(data)
   // sort data
   data.sort(function(b, a) {
-    return b.percchange - a.percchange;
+    return a.percchange - b.percchange;
   });
 // X axis
 var x = d3.scaleBand()
@@ -59,7 +59,15 @@ svg.selectAll("mybar")
     .attr("y", function(d) { return y(d.percchange); })
     .attr("width", x.bandwidth())
     .attr("height", function(d) { return height - y(d.percchange); })
-    .attr("fill", "#800080")
+    .attr("fill", "#00FF00")
+	
+svg.append("text")
+        .attr("x", (width / 2))             
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "16px") 
+        .style("text-decoration", "underline")  
+        .text("Largest Democratic Increase 2008");
 })
 
 </script>
