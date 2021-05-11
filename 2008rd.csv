@@ -1,21 +1,11 @@
-﻿county,percchange
-Rockdale,-0.16
-Hawaii,-0.16
-Honolulu,-0.2
-Kauai,-0.16
-Maui,-0.17
-Kendall,-0.15
-Clinton,-0.15
-Dubois,-0.17
-Elkhart,-0.15
-Montgomery,-0.16
-Rush,-0.16
-Tippecanoe,-0.15
-Big Horn,-0.16
-Carter,-0.22
-Mineral,-0.16
-Powder River,-0.26
-Grant,-0.32
-Cameron,-0.15
-Culberson,-0.18
-Maverick,-0.19
+﻿Name,Meaning,Type,Values
+Year,Year of election,Qualitativve,Min: 2000 max: 2016
+State,State in which the votes are counted,Categorical,Unique Values: 50
+state_PO,State in which the votes are counted,Categorical,Unique Values: 50
+county,County in which the votes are counted,Categorical,Unique Values: 3156
+ FIPS,code for county in which the votes are counted,Categorical,Unique Values: 3156
+Office,Which office are the votes going to?,Categorical,Unique Values: 1
+Candidate,Which candidate were the votes casted for,Categorical,Unique Values: 10
+Party,Party in which the candidate represented,Categorical,Unique Values: 4
+Candidate Votes,Total number of votes received by the candidate by county/state,Quantitative,Min: 0 Max: 2295853
+Total Votes,Total number of votes in the county/state that were cast,Quantitative,Min: 0 Max: 3181067
